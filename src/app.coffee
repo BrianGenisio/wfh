@@ -20,4 +20,4 @@ class app.routers.MainRouter extends Backbone.Router
     view = new app.views.ListRecords(model: model);
     $(".list_of_records").html(view.render().el)
     new app.views.AddMe(model: model, el: $(".add_me"))
-    model.fetch()
+    model.fetch_today()
