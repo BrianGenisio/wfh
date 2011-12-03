@@ -1,6 +1,7 @@
 
 express = require 'express'
 restler = require 'restler'
+url = require 'url'
 config = require './config'
 
 app = express.createServer()
@@ -39,7 +40,8 @@ app.post "/users", (req, res) =>
 
 app.get "/login", (req, res) =>
   console.log "LOGIN: ", req.url, req.body
-  proxy_to "https://api.parse.com/1#{req.url}", req, res
+  query = url.parse(req.url, false).query
+  proxy_to "https://api.parse.com/1/login?#{query}", req, res
 
 app.all "#{config.apiPath}*", (req, res) => 
   console.log "REQUEST: ", req.url, req.body || "no body"
