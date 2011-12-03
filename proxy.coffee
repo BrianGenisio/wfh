@@ -5,13 +5,8 @@ config = require './config'
 
 app = express.createServer()
 app.use express.bodyParser()
-
-app.get "/", (req, res) =>
-  res.sendfile "#{__dirname}/index.html"
-
-app.all "#{config.apiPath}*", (req, res) => 
-  console.log "REQUEST: ", req.url, req.body || "no body"
  
+proxy_to = (url, req, res) ->
   data = JSON.stringify(req.body)
 
   restOptions =
@@ -30,14 +25,31 @@ app.all "#{config.apiPath}*", (req, res) =>
   error = (data, res) =>
     console.log "FAILURE: ", data, res
   
-  restler.request("https://api.parse.com/1/classes/#{req.url.replace(config.apiPath, '')}", restOptions)
+  restler.request(url, restOptions)
     .on("complete", complete)
     .on("error", error)
+
+# Routing Rules
+app.get "/", (req, res) =>
+  res.sendfile "#{__dirname}/index.html"
+
+app.post "/users", (req, res) =>
+  console.log "USER: ", req.url, req.body
+  proxy_to "https://api.parse.com/1/users", req, res
+
+app.get "/login", (req, res) =>
+  console.log "LOGIN: ", req.url, req.body
+  proxy_to "https://api.parse.com/1#{req.url}", req, res
+
+app.all "#{config.apiPath}*", (req, res) => 
+  console.log "REQUEST: ", req.url, req.body || "no body"
+  proxy_to "https://api.parse.com/1/classes/#{req.url.replace(config.apiPath, '')}", req, res
     
 app.get "/*", (req, res) =>
   console.log "REQUESTING: ", req.url
   res.sendfile "#{__dirname}#{req.url}"
-    
+   
+# Start the server 
 port = process.env.PORT || config.port
 app.listen port
 
