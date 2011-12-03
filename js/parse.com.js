@@ -32,7 +32,7 @@
     __extends(ParseModel, Backbone.Model);
 
     ParseModel.prototype.setId = function(data) {
-      if (!data.id) data.id = data.objectId;
+      if (data) if (!data.id) data.id = data.objectId;
       return data;
     };
 

@@ -11,7 +11,8 @@ class Backbone.ParseCollection extends Backbone.Collection
     
 class Backbone.ParseModel extends Backbone.Model
   setId: (data) ->
-    data.id = data.objectId unless data.id
+    if data 
+      data.id = data.objectId unless data.id
     data
 
   constructor: (model) ->
