@@ -19,9 +19,9 @@ proxy_to = (url, req, res) ->
       'Content-Type':  'application/json'
       'Content-Length': data?.length || 0
   
-  complete = (data) => 
+  complete = (data, parse_res) => 
     console.log "COMPLETE: ", data
-    res.json JSON.parse(data)
+    res.json JSON.parse(data), parse_res.statusCode 
   
   error = (data, res) =>
     console.log "FAILURE: ", data, res

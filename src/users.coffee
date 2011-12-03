@@ -1,6 +1,15 @@
 class app.models.User extends Backbone.ParseModel
-  create: (username, password) =>
-    @save {username: username, password: password}, {url: "/users"}
+  create: (username, password, options) =>
+    options = options ? {}
+    options.url = "/users"
+    @save {username: username, password: password}, options
     
-  login: (username, password) =>
-    @fetch {data: {username: username, password: password}, url: "/login"}
+  login: (username, password, options) =>
+    options = options ? {}
+    options.data = 
+      username: username
+      password: password
+      
+    options.url = "/login"
+    
+    @fetch options

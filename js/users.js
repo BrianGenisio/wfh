@@ -11,23 +11,23 @@
       User.__super__.constructor.apply(this, arguments);
     }
 
-    User.prototype.create = function(username, password) {
+    User.prototype.create = function(username, password, options) {
+      options = options != null ? options : {};
+      options.url = "/users";
       return this.save({
         username: username,
         password: password
-      }, {
-        url: "/users"
-      });
+      }, options);
     };
 
-    User.prototype.login = function(username, password) {
-      return this.fetch({
-        data: {
-          username: username,
-          password: password
-        },
-        url: "/login"
-      });
+    User.prototype.login = function(username, password, options) {
+      options = options != null ? options : {};
+      options.data = {
+        username: username,
+        password: password
+      };
+      options.url = "/login";
+      return this.fetch(options);
     };
 
     return User;
