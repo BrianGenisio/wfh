@@ -1,15 +1,101 @@
-body{background-color:#d3e3b7;color:#322;font-family:verdana,arial,helvetica,sans-serif;font-size:13px;line-height:18px}
-a{color:#000;}
-a:visited{color:#666}
-a:hover{color:#fff;background-color:#000}
-.compliment{background-color:#b7d3cc}
-h1{text-align:center;vertical-align:middle;margin:-8px;background-color:#f7f2f5;height:50px;line-height:50px;border-bottom:thick solid #555}
-.list_of_records{margin-left:auto;margin-right:auto;width:50%;min-width:640px;min-height:200px;background-color:#edf4d9;border:thin solid #555;margin-top:20px;box-shadow:5px 5px 5px #888;}
-.list_of_records li{background-color:#b7d3cc;margin:0;margin:1em 1em 1em -1em;padding:0;height:40px;font-size:18px;list-style-type:none;line-height:40px;text-align:center;border:thin solid #555;box-shadow:2px 2px 5px #888;}
-.list_of_records li a{float:right;padding-right:10px}
-.add_me{margin-left:auto;margin-right:auto;width:50%;min-width:640px;height:50px;background-color:#b7d3cc;border:thin solid #555;margin-top:20px;box-shadow:5px 5px 5px #888;text-align:center;line-height:40px;text-shadow:1px 1px 0 rgba(255,255,255,0.70);font-size:20px;}
-.add_me,.add_me #working_from_home{text-decoration:none;cursor:auto;}
-.add_me :visited,.add_me #working_from_home:visited{color:#000}
-.add_me :hover,.add_me #working_from_home:hover{background-color:#edf4d9}
-.add_me  #not_me,.add_me #working_from_home #not_me{cursor:auto;font-size:10px}
-.add_me  p,.add_me #working_from_home p{font-size:20px}
+body {
+  background-color:#d3e3b7;
+  color:#322;
+  font-family:verdana,arial,helvetica,sans-serif;
+  font-size:13px;
+  line-height:18px
+}
+
+a {
+  color:#000;
+}
+
+a:visited {
+  color:#666
+}
+
+a:hover {
+  color:#fff;
+  background-color:#000
+}
+
+.compliment {
+  background-color:#b7d3cc
+}
+
+h1 {
+  text-align:center;
+  vertical-align:middle;
+  margin:-8px;
+  background-color:#f7f2f5;
+  height:50px;
+  line-height:50px;
+  border-bottom:thick solid #555
+}
+
+.list_of_records {
+  margin-left:auto;
+  margin-right:auto;
+  width:50%;
+  min-width:640px;
+  min-height:200px;
+  background-color:#edf4d9;
+  border:thin solid #555;
+  margin-top:20px;
+  box-shadow:5px 5px 5px #888;
+}
+
+.list_of_records li {
+  background-color:#b7d3cc;
+  margin:0;
+  margin:1em 1em 1em -1em;
+  padding:0;
+  height:40px;
+  font-size:18px;
+  list-style-type:none;
+  line-height:40px;
+  text-align:center;
+  border:thin solid #555;
+  box-shadow:2px 2px 5px #888;
+}
+
+.list_of_records li a {
+  float:right;
+  padding-right:10px
+}
+
+.add_me {
+  margin-left:auto;
+  margin-right:auto;
+  width:50%;
+  min-width:640px;
+  height:50px;
+  background-color:#b7d3cc;
+  border:thin solid #555;
+  margin-top:20px;
+  box-shadow:5px 5px 5px #888;
+  text-align:center;
+  line-height:40px;
+  text-shadow:1px 1px 0 rgba(255,255,255,0.70);
+  font-size:20px;
+}
+
+.add_me, .add_me #working_from_home {
+  text-decoration:none;
+  cursor:auto;
+}
+
+.add_me :visited, .add_me #working_from_home:visited {
+  color:#000
+}
+.add_me :hover, .add_me #working_from_home:hover {
+  background-color:#edf4d9
+}
+
+.add_me  #not_me, .add_me #working_from_home #not_me {
+  cursor:auto;
+  font-size:10px
+}
+.add_me p, .add_me #working_from_home p {
+  font-size:20px
+}
