@@ -6,7 +6,7 @@ class app.models.UpdateHandler
     console.log "POST"
     modelData = _.extend {}, data.req, data.resp
     console.log modelData
-    window.model.add_unique(modelData) if data.url == "/data/DayAtHome"
+    window.model.add_unique	(modelData) if data.url == "/data/DayAtHome"
 
   delete: (data) ->
     console.log "DELETE"

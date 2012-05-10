@@ -28,7 +28,6 @@ proxy_to = (url, req, res) ->
     data = JSON.parse data 
     method = req.method.toLowerCase()
     res.json data, parse_res.statusCode
-    console.log "emit sockets"
     io.sockets.emit 'news', {change: method, url: req.url, req: req.body, resp: data}  if method != "get" 
   
   error = (data, res) =>

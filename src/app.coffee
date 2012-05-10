@@ -9,7 +9,7 @@ $(document).ready ->
   router = new app.routers.MainRouter()
   router.navigate 'home' 
   Backbone.history.start()
-  io.connect('http://localhost').on 'news',  (data) -> (new app.models.UpdateHandler()).handleUpdate data
+  io.connect(document.location.origin).on 'news',  (data) -> (new app.models.UpdateHandler()).handleUpdate data
 
 class app.routers.MainRouter extends Backbone.Router
   routes :
