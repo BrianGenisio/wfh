@@ -5,8 +5,12 @@ url = require 'url'
 config = require './config'
 
 app = express.createServer()
+io = require('socket.io').listen app
+
 app.use express.bodyParser()
- 
+
+io.sockets.on 'connection', (socket) -> {}
+
 proxy_to = (url, req, res) ->
   data = JSON.stringify(req.body)
 
@@ -21,7 +25,10 @@ proxy_to = (url, req, res) ->
   
   complete = (data, parse_res) => 
     console.log "COMPLETE: ", data
-    res.json JSON.parse(data), parse_res.statusCode 
+    data = JSON.parse data 
+    method = req.method.toLowerCase()
+    res.json data, parse_res.statusCode
+    io.sockets.emit 'news', {change: method, url: req.url, req: req.body, resp: data}  if method != "get" 
   
   error = (data, res) =>
     console.log "FAILURE: ", data, res

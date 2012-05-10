@@ -17,6 +17,11 @@ class app.collections.DaysAtHome extends Backbone.ParseCollection
   at_home_today: (name) =>
     @create name: name, start: @start_of_today()
 
+  add_unique: (item) ->
+    existing_items = @where objectId: item.objectId
+    return if existing_items.length
+    @add item
+
   fetch_today: =>
     @fetch query: 
       start: 
