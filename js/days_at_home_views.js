@@ -107,6 +107,8 @@
     ListRecords.name = 'ListRecords';
 
     function ListRecords() {
+      this.remove_record = __bind(this.remove_record, this);
+
       this.render_record = __bind(this.render_record, this);
 
       this.render = __bind(this.render, this);
@@ -117,9 +119,12 @@
 
     ListRecords.prototype.className = "recordList";
 
+    ListRecords.prototype.sub_views = {};
+
     ListRecords.prototype.initialize = function() {
       this.model.bind("reset", this.render);
       this.model.bind("add", this.render_record);
+      this.model.bind("remove", this.remove_record);
       return this.render;
     };
 
@@ -134,10 +139,21 @@
       new_view = new app.views.ShowRecord({
         model: record
       });
+      this.sub_views[record.id] = new_view;
       new_item = new_view.render().el;
       $(this.el).append(new_item);
       $(new_item).hide();
       return $(new_item).fadeIn();
+    };
+
+    ListRecords.prototype.remove_record = function(record) {
+      var sub_view;
+      if (!this.sub_views[record.id]) {
+        return;
+      }
+      sub_view = this.sub_views[record.id];
+      sub_view.go_away();
+      return this.sub_views[record.id] = null;
     };
 
     return ListRecords;
@@ -151,6 +167,8 @@
     ShowRecord.name = 'ShowRecord';
 
     function ShowRecord() {
+      this.go_away = __bind(this.go_away, this);
+
       this.remove = __bind(this.remove, this);
 
       this.render = __bind(this.render, this);
@@ -181,6 +199,10 @@
           return _this.model.unbind();
         }
       });
+      return this.go_away();
+    };
+
+    ShowRecord.prototype.go_away = function() {
       return $(this.el).fadeOut();
     };
 

@@ -15,16 +15,19 @@
 
     UpdateHandler.prototype.post = function(data) {
       var modelData;
-      console.log("POST");
       modelData = _.extend({}, data.req, data.resp);
-      console.log(modelData);
       if (data.url === "/data/DayAtHome") {
         return window.model.add_unique(modelData);
       }
     };
 
     UpdateHandler.prototype["delete"] = function(data) {
-      return console.log("DELETE");
+      var id, item;
+      id = (data.url.split('/')).pop();
+      item = window.model.get(id);
+      if (item) {
+        return window.model.remove(item);
+      }
     };
 
     return UpdateHandler;

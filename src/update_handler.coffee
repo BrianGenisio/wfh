@@ -3,10 +3,11 @@ class app.models.UpdateHandler
     @[data.change](data) if @[data.change]
 
   post: (data) ->
-    console.log "POST"
     modelData = _.extend {}, data.req, data.resp
-    console.log modelData
     window.model.add_unique	(modelData) if data.url == "/data/DayAtHome"
 
   delete: (data) ->
-    console.log "DELETE"
+    id = (data.url.split '/').pop()
+    item = window.model.get id
+    window.model.remove item if item
+    
