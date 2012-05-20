@@ -16,7 +16,9 @@
     router = new app.routers.MainRouter();
     router.navigate('home');
     Backbone.history.start();
-    return io.connect(document.location.origin).on('news', function(data) {
+    return io.connect(document.location.origin, {
+      'force new connection': true
+    }).on('news', function(data) {
       return (new app.models.UpdateHandler()).handleUpdate(data);
     });
   });
