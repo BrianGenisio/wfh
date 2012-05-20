@@ -1,22 +1,22 @@
 app.templates.add_me = '''
 
-<a href="#" id="working_from_home"><%= name ? name + " is" : "I am" %> working from home</a><br>
+<button class="btn btn-primary btn-large" id="working_from_home"><%= name ? name + " is" : "I am" %> working from home</button><br>
 <% if(name) { %><a href="#" id="not_me">(Not <%= name %>?)</a><% } %>
 
 '''
 
 app.templates.show_record = '''
 
-<%= name %>
-<a href="#">X</a>
+<div class="well"><h3><%= name %><a class="close" href="#">&times;</a></h3></div>
 
 '''
 
 app.templates.who_are_you = '''
 
-<p>Wait.  Who are you?
-<input type="text"></input>
-<input type="submit"></input></p>
+<form class="well form-inline">
+  <input type="text" class="input-medium" placeholder="Wait. Who are you?"></input>
+  <button type="submit" class="btn">Remember Me</button>
+</form>
 
 '''
 
@@ -75,7 +75,7 @@ class app.views.AddMe extends Backbone.View
     
 class app.views.ListRecords extends Backbone.View
   tagName: 'ul'
-  className: "recordList"
+  className: "recordList unstyled"
   sub_views: {}
 
   initialize: ->

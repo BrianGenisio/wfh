@@ -4,11 +4,11 @@
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
 
-  app.templates.add_me = '\n<a href="#" id="working_from_home"><%= name ? name + " is" : "I am" %> working from home</a><br>\n<% if(name) { %><a href="#" id="not_me">(Not <%= name %>?)</a><% } %>\n';
+  app.templates.add_me = '\n<button class="btn btn-primary btn-large" id="working_from_home"><%= name ? name + " is" : "I am" %> working from home</button><br>\n<% if(name) { %><a href="#" id="not_me">(Not <%= name %>?)</a><% } %>\n';
 
-  app.templates.show_record = '\n<%= name %>\n<a href="#">X</a>\n';
+  app.templates.show_record = '\n<div class="well"><h3><%= name %><a class="close" href="#">&times;</a></h3></div>\n';
 
-  app.templates.who_are_you = '\n<p>Wait.  Who are you?\n<input type="text"></input>\n<input type="submit"></input></p>\n';
+  app.templates.who_are_you = '\n<form class="well form-inline">\n  <input type="text" class="input-medium" placeholder="Wait. Who are you?"></input>\n  <button type="submit" class="btn">Remember Me</button>\n</form>\n';
 
   app.views.AddMe = (function(_super) {
 
@@ -117,7 +117,7 @@
 
     ListRecords.prototype.tagName = 'ul';
 
-    ListRecords.prototype.className = "recordList";
+    ListRecords.prototype.className = "recordList unstyled";
 
     ListRecords.prototype.sub_views = {};
 
