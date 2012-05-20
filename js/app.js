@@ -17,7 +17,7 @@
     router.navigate('home');
     Backbone.history.start();
     return io.connect(document.location.origin, {
-      'force new connection': true
+      transports: ["xhr-polling"]
     }).on('news', function(data) {
       return (new app.models.UpdateHandler()).handleUpdate(data);
     });
