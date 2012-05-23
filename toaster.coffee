@@ -1,7 +1,10 @@
 # => SRC FOLDER
 toast 'src'
 	# => VENDORS (optional)
-	# vendors: ['vendors/x.js', 'vendors/y.js', ... ]
+	vendors: ['vendor/jquery-1.6.2.js', 
+			  'vendor/jquery.cookie.js', 
+			  'vendor/underscore.js', 
+			  'vendor/backbone.js' ]
 
 	# => OPTIONS (optional, default values listed)
 	# bare: false
