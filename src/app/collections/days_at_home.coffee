@@ -1,7 +1,6 @@
-class app.models.DayAtHome extends Backbone.ParseModel
-  urlRoot: "/data/DayAtHome"
-  
-class app.collections.DaysAtHome extends Backbone.ParseCollection
+#<< app/models/*
+
+class DaysAtHome extends Backbone.ParseCollection
   model: app.models.DayAtHome
   url: "/data/DayAtHome"
 
@@ -27,8 +26,3 @@ class app.collections.DaysAtHome extends Backbone.ParseCollection
       start: 
         "$gte": @start_of_today()
         "$lte": @start_of_tomorrow()
-
-
-  
-
-  

@@ -1,4 +1,6 @@
-class app.models.UpdateHandler
+#<< parse.com
+
+class UpdateHandler
   handleUpdate: (data) ->
     @[data.change](data) if @[data.change]
 
@@ -10,4 +12,3 @@ class app.models.UpdateHandler
     id = (data.url.split '/').pop()
     item = window.model.get id
     window.model.remove item if item
-    

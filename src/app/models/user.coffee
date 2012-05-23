@@ -1,4 +1,6 @@
-class app.models.User extends Backbone.ParseModel
+#<< parse.com
+
+class User extends Backbone.ParseModel
   create: (username, password, options) =>
     options = options ? {}
     options.url = "/users"
