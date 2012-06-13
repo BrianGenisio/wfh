@@ -11608,37 +11608,6 @@ var app = window.undefined = {};
 
   })(Backbone.Model);
 
-  __t('app.models', window).UpdateHandler = (function() {
-
-    function UpdateHandler() {}
-
-    UpdateHandler.prototype.handleUpdate = function(data) {
-      if (this[data.change]) {
-        return this[data.change](data);
-      }
-    };
-
-    UpdateHandler.prototype.post = function(data) {
-      var modelData;
-      modelData = _.extend({}, data.req, data.resp);
-      if (data.url === "/data/DayAtHome") {
-        return window.model.add_unique(modelData);
-      }
-    };
-
-    UpdateHandler.prototype["delete"] = function(data) {
-      var id, item;
-      id = (data.url.split('/')).pop();
-      item = window.model.get(id);
-      if (item) {
-        return window.model.remove(item);
-      }
-    };
-
-    return UpdateHandler;
-
-  })();
-
   __t('app.models', window).User = (function(_super) {
 
     __extends(User, _super);
@@ -11681,11 +11650,11 @@ var app = window.undefined = {};
       return DayAtHome.__super__.constructor.apply(this, arguments);
     }
 
-    DayAtHome.prototype.urlRoot = "/data/DayAtHome";
+    DayAtHome.prototype.className = "DayAtHome";
 
     return DayAtHome;
 
-  })(Backbone.ParseModel);
+  })(Parse.Object);
 
   __t('app.collections', window).DaysAtHome = (function(_super) {
 
@@ -11734,19 +11703,15 @@ var app = window.undefined = {};
     };
 
     DaysAtHome.prototype.fetch_today = function() {
-      return this.fetch({
-        query: {
-          start: {
-            "$gte": this.start_of_today(),
-            "$lte": this.start_of_tomorrow()
-          }
-        }
-      });
+      this.query = new Parse.Query(app.models.DayAtHome);
+      this.query.greaterThanOrEqualTo("start", this.start_of_today());
+      this.query.lessThanOrEqualTo("start", this.start_of_tomorrow());
+      return this.fetch();
     };
 
     return DaysAtHome;
 
-  })(Backbone.ParseCollection);
+  })(Parse.Collection);
 
   __t('app.routers', window).MainRouter = (function(_super) {
 
@@ -12004,14 +11969,10 @@ var app = window.undefined = {};
 
   $(document).ready(function() {
     var router;
+    Parse.initialize("gwvL56ITxW6OUn1cspHg8ownNkwm83DIJvVcyEXh", "1Js8WRpd9wzX2t7k0fbrhY59UZ3odXCZaa9iqp70");
     router = new app.routers.MainRouter();
     router.navigate('home');
-    Backbone.history.start();
-    return io.connect(document.location.origin, {
-      transports: ["xhr-polling"]
-    }).on('news', function(data) {
-      return (new app.models.UpdateHandler()).handleUpdate(data);
-    });
+    return Backbone.history.start();
   });
 
 }).call(this);

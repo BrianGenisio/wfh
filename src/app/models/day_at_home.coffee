@@ -1,4 +1,2 @@
-#<< parse.com
-
-class DayAtHome extends Backbone.ParseModel
-  urlRoot: "/data/DayAtHome"
+class DayAtHome extends Parse.Object
+  className: "DayAtHome"
