@@ -1,19 +1,12 @@
 port = process.env.PORT || 3001
+app = require('express').createServer()
 
-express = require 'express'
+serveUp = (res, filename) -> 
+  console.log "REQUESTING: ", filename
+  res.sendfile "#{__dirname}#{filename}"
 
-app = express.createServer()
-app.use express.bodyParser()
-
-# Routing Rules
-app.get "/", (req, res) =>
-  res.sendfile "#{__dirname}/index.html"
-    
-app.get "/*", (req, res) =>
-  console.log "REQUESTING: ", req.url
-  res.sendfile "#{__dirname}#{req.url}"
+app.get "/", (req, res) -> serveUp res, "/index.html"
+app.get "/*", (req, res) -> serveUp res, req.url
    
-# Start the server 
 app.listen port
-
 console.log "Server started on #{port}"
