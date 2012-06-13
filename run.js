@@ -1,2 +1,2 @@
 require("coffee-script");
-require("./proxy.coffee");
+require("./fileServer.coffee");
