@@ -12,8 +12,8 @@ class DaysAtHome extends Parse.Collection
     oneDay = 24 * 60 * 60 * 1000
     new Date(today.getTime() + oneDay)
 
-  at_home_today: (name) =>
-    @create name: name, start: @start_of_today()
+  at_home_today: (name, note) =>
+    @create name: name, start: @start_of_today(), note: note
 
   today_query: () ->
     query = new Parse.Query app.models.DayAtHome

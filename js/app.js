@@ -11650,10 +11650,11 @@ var app = window.undefined = {};
       return new Date(today.getTime() + oneDay);
     };
 
-    DaysAtHome.prototype.at_home_today = function(name) {
+    DaysAtHome.prototype.at_home_today = function(name, note) {
       return this.create({
         name: name,
-        start: this.start_of_today()
+        start: this.start_of_today(),
+        note: note
       });
     };
 
@@ -11732,7 +11733,7 @@ var app = window.undefined = {};
 
     function AddMe() {}
 
-    AddMe.template = '\n<button class="btn btn-primary btn-large" id="working_from_home"><%= name ? name + " is" : "I am" %> working from home</button><br>\n<% if(name) { %><a href="#" id="not_me">(Not <%= name %>?)</a><% } %>\n';
+    AddMe.template = '\n<div><input id="note" type="text" class="input-large" placeholder="Notes (optional)"></div>\n\n<div><button class="btn btn-primary btn-large" id="working_from_home"><%- name ? name + " is" : "I am" %> working from home</button></div>\n\n<p><% if(name) { %><a href="#" id="not_me">(Not <%- name %>?)</a><% } %></p>\n';
 
     return AddMe;
 
@@ -11742,7 +11743,7 @@ var app = window.undefined = {};
 
     function ShowRecord() {}
 
-    ShowRecord.template = '\n<div class="well"><h3><%= name %><a class="close" href="#">&times;</a></h3></div>\n';
+    ShowRecord.template = '\n<div class="well">\n  <h3>\n    <%- data.name %>\n    <small><%- data.note || "" %></small>\n    <a class="close" href="#">&times;</a>\n  </h3>\n  \n</div>\n';
 
     return ShowRecord;
 
@@ -11802,12 +11803,15 @@ var app = window.undefined = {};
     };
 
     AddMe.prototype.i_am_working_from_home = function(e) {
+      var note;
       e.preventDefault();
       if (this.user()) {
-        return this.working_from_home(this.user());
+        note = this.$("#note").val();
+        this.working_from_home(this.user(), note);
       } else {
-        return this.render_who_are_you();
+        this.render_who_are_you();
       }
+      return this.$("#note").val("");
     };
 
     AddMe.prototype.not_me = function(e) {
@@ -11817,13 +11821,16 @@ var app = window.undefined = {};
     };
 
     AddMe.prototype.render_who_are_you = function() {
-      var _this = this;
+      var note,
+        _this = this;
+      note = this.$("#note").val();
       $(this.el).html(this.who_are_you_template());
+      this.$(":text").focus();
       return this.$(":submit").bind("click", function() {
         var name;
         name = _this.$(":input").val();
         _this.set_user(name);
-        _this.working_from_home(name);
+        _this.working_from_home(name, note);
         return _this.render();
       });
     };
@@ -11838,8 +11845,8 @@ var app = window.undefined = {};
       });
     };
 
-    AddMe.prototype.working_from_home = function(name) {
-      return this.model.at_home_today(name);
+    AddMe.prototype.working_from_home = function(name, note) {
+      return this.model.at_home_today(name, note);
     };
 
     return AddMe;
@@ -11930,7 +11937,9 @@ var app = window.undefined = {};
     };
 
     ShowRecord.prototype.render = function() {
-      $(this.el).html(this.template(this.model.toJSON()));
+      $(this.el).html(this.template({
+        data: this.model.toJSON()
+      }));
       return this;
     };
 

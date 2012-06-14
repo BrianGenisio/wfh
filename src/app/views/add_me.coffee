@@ -18,9 +18,11 @@ class AddMe extends Backbone.View
   i_am_working_from_home: (e) =>
     e.preventDefault()
     if @user()
-      @working_from_home @user()
+      note = @$("#note").val() 
+      @working_from_home @user(), note
     else
       @render_who_are_you()
+    @$("#note").val("") 
       
   not_me: (e) =>
     e.preventDefault()
@@ -28,11 +30,13 @@ class AddMe extends Backbone.View
     @render()
       
   render_who_are_you: =>
+    note = @$("#note").val()
     $(@el).html(@who_are_you_template())
+    @$(":text").focus()
     @$(":submit").bind("click", => 
       name = @$(":input").val()
       @set_user name
-      @working_from_home name
+      @working_from_home name, note
       @render()
     )
       
@@ -42,5 +46,5 @@ class AddMe extends Backbone.View
   set_user: (name) =>
     $.cookie("user", name, expires: 365)
     
-  working_from_home: (name) =>
-    @model.at_home_today name
+  working_from_home: (name, note) =>
+    @model.at_home_today name, note

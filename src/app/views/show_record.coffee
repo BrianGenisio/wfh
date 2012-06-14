@@ -11,7 +11,7 @@ class ShowRecord extends Backbone.View
     @model.bind("change", @render)
 
   render: =>
-    $(@el).html(@template(@model.toJSON()))
+    $(@el).html(@template( data: @model.toJSON()))
     this
 
   remove: =>
