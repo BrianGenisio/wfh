@@ -11608,6 +11608,20 @@ var app = window.undefined = {};
 
   })(Backbone.Model);
 
+  __t('app.models', window).DayAtHome = (function(_super) {
+
+    __extends(DayAtHome, _super);
+
+    function DayAtHome() {
+      return DayAtHome.__super__.constructor.apply(this, arguments);
+    }
+
+    DayAtHome.prototype.className = "DayAtHome";
+
+    return DayAtHome;
+
+  })(Parse.Object);
+
   __t('app.models', window).User = (function(_super) {
 
     __extends(User, _super);
@@ -11642,25 +11656,13 @@ var app = window.undefined = {};
 
   })(Backbone.ParseModel);
 
-  __t('app.models', window).DayAtHome = (function(_super) {
-
-    __extends(DayAtHome, _super);
-
-    function DayAtHome() {
-      return DayAtHome.__super__.constructor.apply(this, arguments);
-    }
-
-    DayAtHome.prototype.className = "DayAtHome";
-
-    return DayAtHome;
-
-  })(Parse.Object);
-
   __t('app.collections', window).DaysAtHome = (function(_super) {
 
     __extends(DaysAtHome, _super);
 
     function DaysAtHome() {
+      this.refresh = __bind(this.refresh, this);
+
       this.fetch_today = __bind(this.fetch_today, this);
 
       this.at_home_today = __bind(this.at_home_today, this);
@@ -11691,22 +11693,41 @@ var app = window.undefined = {};
       });
     };
 
-    DaysAtHome.prototype.add_unique = function(item) {
-      var existing_items;
-      existing_items = this.where({
-        objectId: item.objectId
-      });
-      if (existing_items.length) {
-        return;
-      }
-      return this.add(item);
+    DaysAtHome.prototype.today_query = function() {
+      var query;
+      query = new Parse.Query(app.models.DayAtHome);
+      query.greaterThanOrEqualTo("start", this.start_of_today());
+      return query.lessThanOrEqualTo("start", this.start_of_tomorrow());
     };
 
     DaysAtHome.prototype.fetch_today = function() {
-      this.query = new Parse.Query(app.models.DayAtHome);
-      this.query.greaterThanOrEqualTo("start", this.start_of_today());
-      this.query.lessThanOrEqualTo("start", this.start_of_tomorrow());
-      return this.fetch();
+      var IDs, today,
+        _this = this;
+      IDs = function(collection) {
+        return _(collection.map(function(item) {
+          return item.id;
+        }));
+      };
+      today = this.today_query().collection();
+      return today.fetch({
+        success: function(resp, status, xhr) {
+          today.each(function(entry) {
+            if (!IDs(_this).include(entry.id)) {
+              return _this.add(entry);
+            }
+          });
+          _this.each(function(existing) {
+            if (!IDs(today).include(existing.id)) {
+              return _this.remove(existing);
+            }
+          });
+          return _this.refresh();
+        }
+      });
+    };
+
+    DaysAtHome.prototype.refresh = function() {
+      return setTimeout(this.fetch_today, 30 * 1000);
     };
 
     return DaysAtHome;
