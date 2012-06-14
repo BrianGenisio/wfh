@@ -11622,40 +11622,6 @@ var app = window.undefined = {};
 
   })(Parse.Object);
 
-  __t('app.models', window).User = (function(_super) {
-
-    __extends(User, _super);
-
-    function User() {
-      this.login = __bind(this.login, this);
-
-      this.create = __bind(this.create, this);
-      return User.__super__.constructor.apply(this, arguments);
-    }
-
-    User.prototype.create = function(username, password, options) {
-      options = options != null ? options : {};
-      options.url = "/users";
-      return this.save({
-        username: username,
-        password: password
-      }, options);
-    };
-
-    User.prototype.login = function(username, password, options) {
-      options = options != null ? options : {};
-      options.data = {
-        username: username,
-        password: password
-      };
-      options.url = "/login";
-      return this.fetch(options);
-    };
-
-    return User;
-
-  })(Backbone.ParseModel);
-
   __t('app.collections', window).DaysAtHome = (function(_super) {
 
     __extends(DaysAtHome, _super);
@@ -11670,8 +11636,6 @@ var app = window.undefined = {};
     }
 
     DaysAtHome.prototype.model = app.models.DayAtHome;
-
-    DaysAtHome.prototype.url = "/data/DayAtHome";
 
     DaysAtHome.prototype.start_of_today = function() {
       var now;
@@ -11990,7 +11954,7 @@ var app = window.undefined = {};
 
   $(document).ready(function() {
     var router;
-    Parse.initialize("gwvL56ITxW6OUn1cspHg8ownNkwm83DIJvVcyEXh", "1Js8WRpd9wzX2t7k0fbrhY59UZ3odXCZaa9iqp70");
+    Parse.initialize("pXv2I7O7RiDDiN00VKNXON2BYg8JoIMsBT6S33mQ", "uMgQTOm3W9sztmCDiFH7kxhw5hzVUii6iWmeFuTc");
     router = new app.routers.MainRouter();
     router.navigate('home');
     return Backbone.history.start();

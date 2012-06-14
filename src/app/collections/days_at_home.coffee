@@ -2,7 +2,6 @@
 
 class DaysAtHome extends Parse.Collection
   model: app.models.DayAtHome
-  url: "/data/DayAtHome"
 
   start_of_today: ->
     now = new Date()
